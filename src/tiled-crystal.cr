@@ -1,53 +1,53 @@
 require "xml"
 
-struct ParsedTileset
-  property image_file : String = ""
-  property name : String
-  property tile_width : UInt32
-  property tile_height : UInt32
-  property tile_count : UInt32
-  property tile_properties : Array(TileProperties)
-
-  def initialize(@name : String, @tile_width : UInt32, @tile_height : UInt32, @tile_count : UInt32)
-    @tile_properties = Array(TileProperties).new(size: @tile_count) {TileProperties.new}
-  end
-end
-
-struct ParsedMap
-  property width : UInt32
-  property height : UInt32
-  property tile_width : UInt32
-  property tile_height : UInt32
-  property tileset_file : String = ""
-  property layers = [] of ParsedLayer
-
-  def initialize(@width : UInt32, @height : UInt32, @tile_width : UInt32, @tile_height : UInt32)
-  end
-end
-
-struct ParsedLayer
-  property width : UInt32
-  property height : UInt32
-  property name : String
-  property content : Array(UInt32)
-
-  def initialize(@width : UInt32, @height : UInt32, @name : String)
-    @content = Array(UInt32).new(initial_capacity: @width * @height)
-  end
-end
-
-struct TileProperties
-  @properties = {} of String => Bool | Int32 | String | Float32
-
-  def initialize
-  end
-
-  def add(name, value)
-    @properties[name] = value
-  end
-end
-
 module Tiled
+  struct ParsedTileset
+    property image_file : String = ""
+    property name : String
+    property tile_width : UInt32
+    property tile_height : UInt32
+    property tile_count : UInt32
+    property tile_properties : Array(TileProperties)
+  
+    def initialize(@name : String, @tile_width : UInt32, @tile_height : UInt32, @tile_count : UInt32)
+      @tile_properties = Array(TileProperties).new(size: @tile_count) {TileProperties.new}
+    end
+  end
+  
+  struct ParsedMap
+    property width : UInt32
+    property height : UInt32
+    property tile_width : UInt32
+    property tile_height : UInt32
+    property tileset_file : String = ""
+    property layers = [] of ParsedLayer
+  
+    def initialize(@width : UInt32, @height : UInt32, @tile_width : UInt32, @tile_height : UInt32)
+    end
+  end
+  
+  struct ParsedLayer
+    property width : UInt32
+    property height : UInt32
+    property name : String
+    property content : Array(UInt32)
+  
+    def initialize(@width : UInt32, @height : UInt32, @name : String)
+      @content = Array(UInt32).new(initial_capacity: @width * @height)
+    end
+  end
+  
+  struct TileProperties
+    @properties = {} of String => Bool | Int32 | String | Float32
+  
+    def initialize
+    end
+  
+    def add(name, value)
+      @properties[name] = value
+    end
+  end
+  
   def self.parse_tileset(filename : String)
     File.open(filename, "r") do |f|
       parser = XML.parse(f)
