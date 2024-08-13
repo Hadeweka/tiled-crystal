@@ -150,5 +150,5 @@ module Tiled
   end
 end
 
-puts Tiled.parse_tileset("ExampleTileset.tsx").inspect
-puts Tiled.parse_map("ExampleMap.tmx").inspect
+#puts Tiled.parse_tileset("ExampleTileset.tsx").inspect
+#puts Tiled.parse_map("ExampleMap.tmx").inspect
