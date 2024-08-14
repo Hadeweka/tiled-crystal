@@ -38,7 +38,7 @@ module Tiled
   end
   
   struct TileProperties
-    @properties = {} of String => Bool | Int32 | String | Float32
+    property properties = {} of String => Bool | Int32 | String | Float32
   
     def initialize
     end
