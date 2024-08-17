@@ -8,6 +8,7 @@ module Tiled
     property tile_height : UInt32
     property tile_count : UInt32
     property tile_properties : Array(TileProperties)
+    property tile_animations : Array(TileAnimationFrame) = [] of TileAnimationFrame
   
     def initialize(@name : String, @tile_width : UInt32, @tile_height : UInt32, @tile_count : UInt32)
       @tile_properties = Array(TileProperties).new(size: @tile_count) {TileProperties.new}
@@ -45,6 +46,14 @@ module Tiled
   
     def add(name, value)
       @properties[name] = value
+    end
+  end
+
+  struct TileAnimationFrame
+    @tile_id : UInt32
+    @duration : UInt32
+
+    def initialize(@tile_id : UInt32, @duration : UInt32)
     end
   end
   
@@ -87,6 +96,12 @@ module Tiled
                   else
                     puts "Property type not supported: #{prop_type}"
                   end
+                end
+              elsif node_child.name == "animation"
+                animations = node_child
+                animations.children.each do |anim|
+                  next if anim.text?
+                  tileset.tile_animations.push(TileAnimationFrame.new(anim["tileid"].to_u32, anim["duration"].to_u32))
                 end
               end
             end
@@ -150,5 +165,5 @@ module Tiled
   end
 end
 
-#puts Tiled.parse_tileset("ExampleTileset.tsx").inspect
-#puts Tiled.parse_map("ExampleMap.tmx").inspect
+puts Tiled.parse_tileset("ExampleTileset.tsx").inspect
+puts Tiled.parse_map("ExampleMap.tmx").inspect
