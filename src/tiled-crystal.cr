@@ -51,8 +51,8 @@ module Tiled
   end
 
   struct TileAnimationFrame
-    @tile_id : UInt32
-    @duration : UInt32
+    property tile_id : UInt32
+    property duration : UInt32
 
     def initialize(@tile_id : UInt32, @duration : UInt32)
     end
