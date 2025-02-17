@@ -1,3 +1,9 @@
+NOTE: This repository remains for compatibility.
+
+For the current version, please refer to:
+
+https://github.com/Crystal2Day/tiled-crystal
+
 # tiled-crystal
 
 This Crystal shard allows parsing map files from Tiled (https://www.mapeditor.org/) into Crystal structures.
